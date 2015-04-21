@@ -2,6 +2,9 @@
 *.3dsx
 *.elf
 *.smdh
+*.bz2
 Thumbs.db
 build/
 lib/
+docs/
+
