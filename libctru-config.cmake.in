@@ -26,6 +26,10 @@
 #     distribution.
 #####################################################################
 
+if(TARGET CTR::libctr)
+	message(SEND_ERROR "libctru cannot be used with libctr")
+	return()
+endif()
 
 @PACKAGE_INIT@
 
