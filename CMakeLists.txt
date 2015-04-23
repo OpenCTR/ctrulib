@@ -25,6 +25,10 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Values: Debug, Release, RelWithDebInfo, MinSizeRel")
 endif()
 
+if(NOT DEFINED CTR_ROOT)
+	message(FATAL_ERROR "CTR_ROOT is not set")
+endif()
+
 # CMake Cross-Compiler Toolchain
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/OpenCTR-Toolchain.cmake")
 

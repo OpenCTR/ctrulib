@@ -17,11 +17,6 @@
 #     distribution.
 #####################################################################
 
-if(NOT DEFINED CTR_ROOT)
-	message(SEND_ERROR "CTR_ROOT is not set")
-	return()
-endif()
-
 find_program(CMAKE_ASM_COMPILER_EXE 
 	NAMES
 		arm-none-eabi-as
@@ -31,12 +26,10 @@ find_program(CMAKE_ASM_COMPILER_EXE
 		bin
 	DOC
 		"Find the arm-none-eabi-as assembler"
-	NO_DEFAULT_PATH
 )
 
 if(NOT CMAKE_ASM_COMPILER_EXE)
-	message(SEND_ERROR "Could not find arm-none-eabi-as")
-	return()
+	message(FATAL_ERROR "Could not find arm-none-eabi-as")
 endif()
 
 set(CMAKE_ASM_COMPILER "${CMAKE_ASM_COMPILER_EXE}")
