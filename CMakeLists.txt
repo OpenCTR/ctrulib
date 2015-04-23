@@ -19,6 +19,8 @@
 
 cmake_minimum_required(VERSION 3.0.0)
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Values: Debug, Release, RelWithDebInfo, MinSizeRel")
 endif()
@@ -61,6 +63,8 @@ include_directories(
 )
 
 ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 add_library(ctru
 	source/allocator/linear.cpp

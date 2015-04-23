@@ -91,8 +91,13 @@ sdmc_devoptab =
   .fsync_r      = sdmc_fsync,
   .deviceData   = NULL,
   .chmod_r      = sdmc_chmod,
+#ifdef HAVE_NEWLIB_RMDIR
   .fchmod_r     = sdmc_fchmod,
   .rmdir_r      = sdmc_rmdir,
+#else
+  .fchmod_r     = sdmc_fchmod
+#endif
+
 };
 
 /*! SDMC archive handle */
