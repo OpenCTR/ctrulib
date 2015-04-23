@@ -25,15 +25,8 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Values: Debug, Release, RelWithDebInfo, MinSizeRel")
 endif()
 
-if(NOT DEFINED CTR_ROOT)
-  message(SEND_ERROR "CTR_ROOT is not set.")
-endif()
-
 # CMake Cross-Compiler Toolchain
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/OpenCTR-Toolchain.cmake")
-
-# Install everything to <OPENCTR_INSTALL_DIR>/libctru
-set(CMAKE_INSTALL_PREFIX "${CTR_ROOT}/libctru" CACHE INTERNAL "CMAKE_INSTALL_ROOT")
 
 include(CMakePackageConfigHelpers)
 include(CMakeProjectSettings)
@@ -177,7 +170,7 @@ endif()
 
 # Install default_icon.png
 install(FILES default_icon.png
-	DESTINATION .
+	DESTINATION libctru
 )
 
 # Configure libctru-config.cmake
@@ -190,7 +183,7 @@ configure_package_config_file(
 
 # Install libctru headers
 install(DIRECTORY include/
-	DESTINATION include
+	DESTINATION libctru/include
 	USE_SOURCE_PERMISSIONS
 	PATTERN .* EXCLUDE
 )
@@ -205,8 +198,8 @@ install(DIRECTORY cmake/Modules/
 # Install libctru.a
 install(TARGETS ctru 
 	EXPORT libctru
-	ARCHIVE DESTINATION lib
-	INCLUDES DESTINATION include
+	ARCHIVE DESTINATION libctru/lib
+	INCLUDES DESTINATION libctru/include
 )
 
 # Install libctru-targets.cmake
