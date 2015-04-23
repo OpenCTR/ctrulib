@@ -64,6 +64,10 @@ include_directories(
 
 ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 
+set(CMAKE_C_FLAGS "-march=armv6k -mtune=mpcore -mfloat-abi=hard -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math ${CMAKE_C_FLAGS")
+
+set(CMAKE_CXX_FLAGS "-march=armv6k -mtune=mpcore -mfloat-abi=hard -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math ${CMAKE_CXX_FLAGS")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 add_library(ctru
