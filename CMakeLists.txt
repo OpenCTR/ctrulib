@@ -17,36 +17,31 @@
 #     distribution.
 #####################################################################
 
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 2.8)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Values: Debug, Release, RelWithDebInfo, MinSizeRel")
+  set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Debug/Release/RelWithDebInfo/MinSizeRel")
 endif()
-
-if(NOT DEFINED CTR_ROOT)
-	message(FATAL_ERROR "CTR_ROOT is not set")
-endif()
-
-# CMake Cross-Compiler Toolchain
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/OpenCTR-Toolchain.cmake")
 
 include(CMakePackageConfigHelpers)
-include(CMakeProjectSettings)
 
-project(libctr)
+project(libctru)
+
+# libctru version
+set(LIBCTRU_VERSION_MAJOR 0)
+set(LIBCTRU_VERSION_MINOR 5)
+set(LIBCTRU_VERSION_PATCH 0)
+set(LIBCTRU_VERSION ${LIBCTRU_VERSION_MAJOR}.${LIBCTRU_VERSION_MINOR}.${LIBCTRU_VERSION_PATCH})
 
 # Require artool for ctr_add_resources()
 find_package(artool REQUIRED)
 
-set(LIBCTRU_VERSION_MAJOR 0)
-set(LIBCTRU_VERSION_MINOR 5)
-set(LIBCTRU_VERSION_PATCH 0)
-set(LIBCTRU_VERSION "${LIBCTRU_VERSION_MAJOR}.${LIBCTRU_VERSION_MINOR}.${LIBCTRU_VERSION_PATCH}")
-
+# Add CMAKE_CURRENT_BINARY_DIR to include directories
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
 
+# Add required include directories
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/source
@@ -59,15 +54,11 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/source/system
 )
 
+# Generate a binary resource for default_font.bin
 ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 
-set(CMAKE_C_FLAGS "-march=armv6k -mtune=mpcore -mfloat-abi=hard -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math ${CMAKE_C_FLAGS}")
-
-set(CMAKE_CXX_FLAGS "-march=armv6k -mtune=mpcore -mfloat-abi=hard -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math ${CMAKE_CXX_FLAGS}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-
-add_library(ctru
+# Add libctru
+add_library(ctru STATIC 
 	source/allocator/linear.cpp
 	source/allocator/mem_pool.cpp
 	source/allocator/vram.cpp
