@@ -57,6 +57,9 @@ include_directories(
 # Generate a binary resource for default_font.bin
 ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 
+# Enable Assembly
+enable_language(ASM)
+
 # Add libctru
 add_library(ctru STATIC 
 	source/allocator/linear.cpp
