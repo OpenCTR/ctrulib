@@ -186,13 +186,6 @@ install(DIRECTORY include/
 	PATTERN .* EXCLUDE
 )
 
-# Install CMake modules (imported from libctr)
-install(DIRECTORY cmake/Modules/
-	DESTINATION ${CONFIG_PREFIX}
-	PATTERN .* EXCLUDE
-	PATTERN CMake*.cmake EXCLUDE
-)
-
 # Install libctru.a
 install(TARGETS ctru 
 	EXPORT libctru
