@@ -25,10 +25,10 @@ endif()
 
 include(CMakePackageConfigHelpers)
 
-set(CMAKE_C_FLAGS "-std=gnu11")
-set(CMAKE_CXX_FLAGS "-std=gnu++11")
-
 project(libctru)
+
+set(CMAKE_C_FLAGS "-std=gnu11 ${CMAKE_C_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=gnu++11 ${CMAKE_CXX_FLAGS}")
 
 # libctru version
 set(LIBCTRU_VERSION_MAJOR 0)
