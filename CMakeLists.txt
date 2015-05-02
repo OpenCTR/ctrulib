@@ -161,30 +161,34 @@ add_library(ctru STATIC
 # Export CTR::libctru instead of CTR::ctru
 set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
 
-if(WIN32)
-	# Win32 CMake find_package() searches <prefix>/CMake/
-	set(CONFIG_PREFIX "CMake")
-else()
-	# UNIX CMake find_package() searches <prefix>/share/cmake
-	set(CONFIG_PREFIX "share/cmake")
-endif()
-
 # Install default_icon.png
-install(FILES default_icon.png
-	DESTINATION libctru
+install(
+	FILES 
+		default_icon.png
+	DESTINATION 
+		${CMAKE_INSTALL_PREFIX}/share/libctru
 )
 
 # Configure libctru-config.cmake
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/libctru-config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/libctru-config.cmake
-	INSTALL_DESTINATION ${CONFIG_PREFIX}
-	PATH_VARS CONFIG_PREFIX
+	INSTALL_DESTINATION CMake
+)
+
+# Create libctru-config-version.cmake
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/libctru-config-version.cmake
+	VERSION ${LIBCTRU_VERSION}
+	COMPATIBILITY SameMajorVersion
 )
 
 # Install libctru headers
-install(DIRECTORY include/
-	DESTINATION libctru/include
+install(
+	DIRECTORY 
+		include/
+	DESTINATION 
+		${CMAKE_INSTALL_PREFIX}/include
 	USE_SOURCE_PERMISSIONS
 	PATTERN .* EXCLUDE
 )
@@ -192,18 +196,22 @@ install(DIRECTORY include/
 # Install libctru.a
 install(TARGETS ctru 
 	EXPORT libctru
-	ARCHIVE DESTINATION libctru/lib
-	INCLUDES DESTINATION libctru/include
+	ARCHIVE DESTINATION lib
+	INCLUDES DESTINATION include
 )
 
 # Install libctru-targets.cmake
 install(EXPORT libctru
-	DESTINATION ${CONFIG_PREFIX}
+	DESTINATION CMake
 	FILE libctru-targets.cmake
 	NAMESPACE CTR::
 )
 
-# Install libctru-config.cmake
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libctru-config.cmake 
-	DESTINATION ${CONFIG_PREFIX}
+# Install libctru-config.cmake and libctru-config-version.cmake
+install(
+	FILES 
+		${CMAKE_CURRENT_BINARY_DIR}/libctru-config.cmake 
+		${CMAKE_CURRENT_BINARY_DIR}/libctru-config-version.cmake 
+	DESTINATION 
+		${CMAKE_INSTALL_PREFIX}/CMake
 )
