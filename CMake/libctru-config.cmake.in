@@ -19,7 +19,7 @@
 # this program. If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-set(LIBCTRU_VERSION @LIBCTRU_VERSION_MAJOR@.@LIBCTRU_VERSION_MINOR@.@LIBCTRU_VERSION_PATCH@)
+set(LIBCTRU_VERSION @LIBCTRU_VERSION@)
 
 @CMAKE_PACKAGE_INIT@
 
