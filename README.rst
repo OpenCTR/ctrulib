@@ -1,6 +1,6 @@
-=======
-ctrulib
-=======
+=========
+ ctrulib 
+=========
 
 This is a fork of `ctrulib`_ for the `OpenCTR SDK`_. 
 It can be built manually (with CMake) or automatically as part of `OpenCTR`_.

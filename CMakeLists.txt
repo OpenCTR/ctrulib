@@ -17,26 +17,20 @@
 #     distribution.
 #####################################################################
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.0)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Debug/Release/RelWithDebInfo/MinSizeRel")
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
-include(CMakePackageConfigHelpers)
+include(CMakeExportPackage)
 
 project(libctru)
 
-set(CMAKE_C_FLAGS "-std=gnu11 ${CMAKE_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "-std=gnu++11 ${CMAKE_CXX_FLAGS}")
-
 # libctru version
-set(LIBCTRU_VERSION_MAJOR 0)
-set(LIBCTRU_VERSION_MINOR 5)
-set(LIBCTRU_VERSION_PATCH 0)
-set(LIBCTRU_VERSION ${LIBCTRU_VERSION_MAJOR}.${LIBCTRU_VERSION_MINOR}.${LIBCTRU_VERSION_PATCH})
+set(LIBCTRU_VERSION 0.5.0)
 
 # Require artool for ctr_add_resources()
 find_package(artool REQUIRED)
@@ -158,60 +152,49 @@ add_library(ctru STATIC
 	${DEFAULT_FONT}
 )
 
-# Export CTR::libctru instead of CTR::ctru
-set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
-
 # Install default_icon.png
-install(
-	FILES 
-		default_icon.png
-	DESTINATION 
-		${CMAKE_INSTALL_PREFIX}/share/libctru
-)
-
-# Configure libctru-config.cmake
-configure_package_config_file(
-	${CMAKE_CURRENT_SOURCE_DIR}/libctru-config.cmake.in
-	${CMAKE_CURRENT_BINARY_DIR}/libctru-config.cmake
-	INSTALL_DESTINATION CMake
-)
-
-# Create libctru-config-version.cmake
-write_basic_package_version_file(
-	${CMAKE_CURRENT_BINARY_DIR}/libctru-config-version.cmake
-	VERSION ${LIBCTRU_VERSION}
-	COMPATIBILITY SameMajorVersion
+install(FILES default_icon.png
+	DESTINATION share/libctru
 )
 
 # Install libctru headers
-install(
-	DIRECTORY 
-		include/
-	DESTINATION 
-		${CMAKE_INSTALL_PREFIX}/include
+install(DIRECTORY include/
+	DESTINATION include
 	USE_SOURCE_PERMISSIONS
-	PATTERN .* EXCLUDE
+	PATTERN ".*" EXCLUDE
+)
+
+# Export CTR::libctru instead of CTR::ctru
+set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
+
+# Add ``<prefix>/include`` to the list of included directories in libctru.
+set_property(TARGET ctru PROPERTY INTERFACE_INCLUDE_DIRECTORIES "include")
+
+# Generate libctru-config.cmake and libctru-config-version.cmake
+cmake_export_package(
+	INPUT_FILE CMake/libctru-config.cmake.in
+	OUTPUT_FILE CMakeFiles/libctru-config.cmake
+	VERSION_FILE CMakeFiles/libctru-config-version.cmake
+	INSTALL_DESTINATION lib/cmake/libctru
+	VERSION ${LIBCTRU_VERSION}
 )
 
 # Install libctru.a
 install(TARGETS ctru 
 	EXPORT libctru
 	ARCHIVE DESTINATION lib
-	INCLUDES DESTINATION include
 )
 
 # Install libctru-targets.cmake
 install(EXPORT libctru
-	DESTINATION CMake
+	DESTINATION lib/cmake/libctru
 	FILE libctru-targets.cmake
 	NAMESPACE CTR::
 )
 
 # Install libctru-config.cmake and libctru-config-version.cmake
-install(
-	FILES 
-		${CMAKE_CURRENT_BINARY_DIR}/libctru-config.cmake 
-		${CMAKE_CURRENT_BINARY_DIR}/libctru-config-version.cmake 
-	DESTINATION 
-		${CMAKE_INSTALL_PREFIX}/CMake
+install(FILES 
+	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/libctru-config.cmake
+	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/libctru-config-version.cmake
+	DESTINATION lib/cmake/libctru
 )
