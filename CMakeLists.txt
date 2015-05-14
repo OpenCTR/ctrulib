@@ -33,7 +33,7 @@ project(libctru)
 set(LIBCTRU_VERSION 0.5.0)
 
 # Require artool for ctr_add_resources()
-find_package(artool REQUIRED)
+find_package(artool CONFIG REQUIRED)
 
 # Add CMAKE_CURRENT_BINARY_DIR to include directories
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
