@@ -57,6 +57,9 @@ ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 # Enable Assembly
 enable_language(ASM)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
 # Add libctru
 add_library(ctru STATIC 
 	source/allocator/linear.cpp
