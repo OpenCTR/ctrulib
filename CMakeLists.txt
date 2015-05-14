@@ -26,8 +26,12 @@ endif()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 include(CMakeExportPackage)
+include(CMakeForceCompiler)
 
 project(libctru)
+
+cmake_force_c_compiler("arm-none-eabi-gcc" GNU)
+cmake_force_cxx_compiler("arm-none-eabi-g++" GNU)
 
 # libctru version
 set(LIBCTRU_VERSION 0.5.0)
