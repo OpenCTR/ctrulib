@@ -57,8 +57,8 @@ ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 # Enable Assembly
 enable_language(ASM)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -mword-relocations -fno-strict-aliasing -fomit-frame-pointer -ffast-math")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 -march=armv6k -mtune=mpcore -mfloat-abi=hard")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -march=armv6k -mtune=mpcore -mfloat-abi=hard")
 
 # Add libctru
 add_library(ctru STATIC 
