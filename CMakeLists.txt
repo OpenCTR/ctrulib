@@ -168,7 +168,7 @@ install(DIRECTORY include/
 set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
 
 # Add ``<prefix>/include`` to the list of included directories in libctru.
-set_property(TARGET ctru PROPERTY INTERFACE_INCLUDE_DIRECTORIES "include")
+set_property(TARGET ctru PROPERTY INTERFACE_INCLUDE_DIRECTORIES "$<INSTALL_PREFIX>/include")
 
 # Generate libctru-config.cmake and libctru-config-version.cmake
 cmake_export_package(
