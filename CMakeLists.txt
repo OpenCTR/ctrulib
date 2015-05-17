@@ -175,7 +175,7 @@ set_property(TARGET ctru PROPERTY
 # Configure libctru-config.cmake
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/CMake/libctru-config.cmake.in
-	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/openctr-config.cmake
+	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/libctru-config.cmake
 	INSTALL_DESTINATION lib/cmake/libctru
 )
 
