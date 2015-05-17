@@ -25,15 +25,15 @@ endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
 
-include(CMakeExportPackage)
+include(CMakePackageConfigHelpers)
 
 project(libctru)
 
 # libctru version
 set(LIBCTRU_VERSION 0.5.0)
 
-# Require artool for ctr_add_resources()
-find_package(artool CONFIG REQUIRED)
+# Use the OpenCTR Toolchain and artool
+find_package(OpenCTR COMPONENTS artool REQUIRED)
 
 # Add CMAKE_CURRENT_BINARY_DIR to include directories
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
@@ -56,9 +56,6 @@ ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 
 # Enable Assembly
 enable_language(ASM)
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 -march=armv6k -mtune=mpcore -mfloat-abi=hard")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -march=armv6k -mtune=mpcore -mfloat-abi=hard")
 
 # Add libctru
 add_library(ctru STATIC 
@@ -162,7 +159,7 @@ install(FILES default_icon.png
 
 # Install libctru headers
 install(DIRECTORY include/
-	DESTINATION include
+	DESTINATION include/libctru
 	USE_SOURCE_PERMISSIONS
 	PATTERN ".*" EXCLUDE
 )
@@ -171,14 +168,21 @@ install(DIRECTORY include/
 set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
 
 # Add ``<prefix>/include`` to the list of included directories in libctru.
-set_property(TARGET ctru PROPERTY INTERFACE_INCLUDE_DIRECTORIES "$<INSTALL_PREFIX>/include")
+set_property(TARGET ctru PROPERTY 
+	INTERFACE_INCLUDE_DIRECTORIES "$<INSTALL_PREFIX>/include/libctru"
+)
 
-# Generate libctru-config.cmake and libctru-config-version.cmake
-cmake_export_package(
-	INPUT_FILE CMake/libctru-config.cmake.in
-	OUTPUT_FILE CMakeFiles/libctru-config.cmake
-	VERSION_FILE CMakeFiles/libctru-config-version.cmake
+# Configure libctru-config.cmake
+configure_package_config_file(
+	${CMAKE_CURRENT_SOURCE_DIR}/CMake/libctru-config.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/openctr-config.cmake
 	INSTALL_DESTINATION lib/cmake/libctru
+)
+
+# Create openctr-config-version.cmake
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/libctru-config-version.cmake 
+	COMPATIBILITY AnyNewerVersion 
 	VERSION ${LIBCTRU_VERSION}
 )
 

@@ -1,27 +1,10 @@
-#.rst:
-# libctru-config
-# --------------
-# 
-# :command:`find_package` interface to libctru. 
-
-################################################################################
-# This program is free software: you can redistribute it and/or modify it under 
-# the terms of the GNU General Public License as published by the 
-# Free Software Foundation, either version 3 of the License, or (at your option)
-# any later version.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
-# more details.
-# 
-# You should have received a copy of the GNU General Public License along with 
-# this program. If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
 set(LIBCTRU_VERSION @LIBCTRU_VERSION@)
 
-@CMAKE_PACKAGE_INIT@
+@PACKAGE_INIT@
+
+get_filename_component(CURDIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
+
+include(${CURDIR}/libctru-targets.cmake)
 
 if(TARGET CTR::libctru)
 	get_property(LIBCTRU_LIBRARY TARGET CTR::libctru PROPERTY LOCATION)
@@ -34,5 +17,4 @@ find_package_handle_standard_args(libctru
 	FOUND_VAR LIBCTRU_FOUND 
 	REQUIRED_VARS LIBCTRU_LIBRARY LIBCTRU_INCLUDE_DIR
 	VERSION_VAR ${LIBCTRU_VERSION}
-	CONFIG_MODE
 )
