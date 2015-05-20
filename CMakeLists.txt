@@ -170,9 +170,6 @@ install(DIRECTORY include/
 # Export CTR::libctru instead of CTR::ctru
 set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
 
-# Language used when linking libraries against libctru
-set_property(TARGET ctru PROPERTY IMPORTED_LINK_INTERFACE_LANGUAGES "C")
-
 # Add ``<prefix>/include`` to the list of included directories in libctru.
 set_property(TARGET ctru PROPERTY 
 	INTERFACE_INCLUDE_DIRECTORIES "$<INSTALL_PREFIX>/include/libctru"
