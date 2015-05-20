@@ -54,6 +54,9 @@ include_directories(
 # Generate a binary resource for default_font.bin
 ctr_add_resources(DEFAULT_FONT HEADER default_font_bin.h data/default_font.bin)
 
+# Required ASM flags
+set(CMAKE_ASM_FLAGS "-march=armv6k -mtune=mpcore -mfloat-abi=hard" CACHE INTERNAL "ASM Flags" FORCE)
+
 # Enable Assembly
 enable_language(ASM)
 
@@ -166,6 +169,9 @@ install(DIRECTORY include/
 
 # Export CTR::libctru instead of CTR::ctru
 set_property(TARGET ctru PROPERTY EXPORT_NAME "libctru")
+
+# Language used when linking libraries against libctru
+set_property(TARGET ctru PROPERTY IMPORTED_LINK_INTERFACE_LANGUAGES "C")
 
 # Add ``<prefix>/include`` to the list of included directories in libctru.
 set_property(TARGET ctru PROPERTY 
