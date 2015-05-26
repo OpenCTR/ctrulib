@@ -23,7 +23,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Debug/Release/RelWithDebInfo/MinSizeRel")
 endif()
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake;${CMAKE_MODULE_PATH}")
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 
 include(CMakePackageConfigHelpers)
 
@@ -179,7 +179,7 @@ configure_package_config_file(
 	INSTALL_DESTINATION lib/cmake/libctru
 )
 
-# Create openctr-config-version.cmake
+# Create libctru-config-version.cmake
 write_basic_package_version_file(
 	${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/libctru-config-version.cmake 
 	COMPATIBILITY AnyNewerVersion 
