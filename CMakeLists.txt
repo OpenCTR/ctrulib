@@ -19,9 +19,7 @@
 
 cmake_minimum_required(VERSION 3.0.0)
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Debug" CACHE INTERNAL "Debug/Release/RelWithDebInfo/MinSizeRel")
-endif()
+set(CMAKE_BUILD_TYPE_INIT "Debug")
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 
@@ -32,8 +30,7 @@ project(libctru)
 # libctru version
 set(LIBCTRU_VERSION 0.5.0)
 
-# Use the OpenCTR Toolchain and artool
-find_package(OpenCTR COMPONENTS artool REQUIRED)
+find_package(OpenCTR CONFIG REQUIRED artool)
 
 # Add CMAKE_CURRENT_BINARY_DIR to include directories
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
